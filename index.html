@@ -678,32 +678,31 @@ header p {
   </div>
 </div>
 
-<button onclick="resetAll()" title="reset for testing" style="position:fixed;bottom:16px;right:16px;font-size:0.68rem;padding:5px 10px;background:none;border:1px solid #e0d5c8;border-radius:8px;color:#c8bdb0;cursor:pointer;font-family:'Nunito',sans-serif;">reset</button>
 
 <script>
 const ITEMS = [
   // food
   { id: 1,  name: 'Small box of almonds, A',    category: 'food' },
   { id: 2,  name: 'Small box of almonds, B',    category: 'food' },
-  { id: 3,  name: 'Big box of Meiji almonds, A', category: 'food' },
-  { id: 4,  name: 'Big box of Meiji almonds, B', category: 'food' },
+  // { id: 3,  name: 'Big box of Meiji almonds, A', category: 'food' },
+  // { id: 4,  name: 'Big box of Meiji almonds, B', category: 'food' },
   { id: 5,  name: 'Lemon gummies',              category: 'food' },
-  { id: 6,  name: 'GABA chocolate',             category: 'food' },
+  // { id: 6,  name: 'GABA chocolate',             category: 'food' },
   { id: 7,  name: 'Passion fruit Hi-Chew',      category: 'food' },
-  { id: 8,  name: 'Strong Hi-Chew',             category: 'food' },
+  // { id: 8,  name: 'Strong Hi-Chew',             category: 'food' },
   { id: 9,  name: 'Matcha KitKats',             category: 'food' },
-  { id: 10, name: 'Royce chocolates',           category: 'food' },
+  // { id: 10, name: 'Royce chocolates',           category: 'food' },
   // stationery
   { id: 11, name: 'Sailor fountain pen',        category: 'stationery' },
   { id: 12, name: 'Ancora fountain pens',       category: 'stationery' },
-  { id: 13, name: 'Black ink',                  category: 'stationery' },
+  // { id: 13, name: 'Black ink',                  category: 'stationery' },
   { id: 14, name: 'Green ink',                  category: 'stationery' },
-  { id: 15, name: 'Red ink',                    category: 'stationery' },
-  { id: 16, name: 'Pink ink',                   category: 'stationery' },
-  { id: 17, name: 'Sarasara gel pens',          category: 'stationery' },
+  // { id: 15, name: 'Red ink',                    category: 'stationery' },
+  // { id: 16, name: 'Pink ink',                   category: 'stationery' },
+  // { id: 17, name: 'Sarasara gel pens',          category: 'stationery' },
   { id: 18, name: 'Cute washi tapes',           category: 'stationery' },
   { id: 19, name: 'Dog chef Post-it',           category: 'stationery' },
-  { id: 20, name: 'Bear chef Post-it',          category: 'stationery' },
+  // { id: 20, name: 'Bear chef Post-it',          category: 'stationery' },
   { id: 21, name: 'Ramen cat Post-it',          category: 'stationery' },
   { id: 22, name: 'Confused frog Post-it',      category: 'stationery' },
   { id: 23, name: 'Coffee cat Post-it',         category: 'stationery' },
@@ -711,22 +710,22 @@ const ITEMS = [
   { id: 25, name: 'Scrapbooking supplies',      category: 'stationery' },
   // kitchen / home
   { id: 26, name: 'Nintendo Switch controller', category: 'kitchen' },
-  { id: 27, name: 'Chopsticks',                 category: 'kitchen' },
-  { id: 28, name: 'Cute tiny kitchen tools',    category: 'kitchen' },
-  { id: 29, name: 'Knives',                     category: 'kitchen' },
-  { id: 30, name: 'Big kitchen tongs',          category: 'kitchen' },
+  // { id: 27, name: 'Chopsticks',                 category: 'kitchen' },
+  // { id: 28, name: 'Cute tiny kitchen tools',    category: 'kitchen' },
+  // { id: 29, name: 'Knives',                     category: 'kitchen' },
+  // { id: 30, name: 'Big kitchen tongs',          category: 'kitchen' },
   { id: 31, name: 'Bowls',                      category: 'kitchen' },
   { id: 32, name: 'Tote bag',                   category: 'kitchen' },
   // skincare
-  { id: 33, name: 'Metea face masks',           category: 'skincare' },
+  // { id: 33, name: 'Metea face masks',           category: 'skincare' },
   { id: 34, name: 'Reedle face masks',          category: 'skincare' },
   { id: 35, name: 'Centella toner pad',         category: 'skincare' },
-  { id: 36, name: 'Sticky neck hot pack',       category: 'skincare' },
+  // { id: 36, name: 'Sticky neck hot pack',       category: 'skincare' },
   { id: 37, name: 'Derma Laser face masks',     category: 'skincare' },
-  { id: 38, name: 'Eye makeup remover',         category: 'skincare' },
+  // { id: 38, name: 'Eye makeup remover',         category: 'skincare' },
   { id: 39, name: 'Pore-clearing gel',          category: 'skincare' },
-  { id: 40, name: 'Rice pack',                  category: 'skincare' },
-  { id: 41, name: 'Onitsuka Tigers',            category: 'kitchen' },
+  // { id: 40, name: 'Rice pack',                  category: 'skincare' },
+  // { id: 41, name: 'Onitsuka Tigers',            category: 'kitchen' },
 ];
 
 const CATS = {
@@ -750,15 +749,19 @@ function todayStr() { return new Date().toISOString().slice(0, 10); }
 function loadState() {
   try {
     const s = JSON.parse(localStorage.getItem('japan-haul') || '{}');
+    const firstDate = s.firstDate || todayStr();
     if (s.date !== todayStr())
-      return { date: todayStr(), phase: 'ready', capsule: null, shakeLeft: 1, openedIds: s.openedIds || [] };
-    return s;
+      return { date: todayStr(), firstDate, phase: 'ready', capsule: null, pullsToday: 0, openedIds: s.openedIds || [] };
+    return { ...s, firstDate, pullsToday: s.pullsToday || 0 };
   } catch(e) {
-    return { date: todayStr(), phase: 'ready', capsule: null, shakeLeft: 1, openedIds: [] };
+    return { date: todayStr(), firstDate: todayStr(), phase: 'ready', capsule: null, pullsToday: 0, openedIds: [] };
   }
 }
 function save() { localStorage.setItem('japan-haul', JSON.stringify(S)); }
 let S = loadState();
+
+// 10 capsules on the very first day of use, 1 per day after that.
+function dailyLimit() { return S.firstDate === todayStr() ? 10 : 1; }
 
 // ── Pool ──────────────────────────────────────────────────────────────────────
 function poolFor(c) { return ITEMS.filter(i => i.category === c && !S.openedIds.includes(i.id)); }
@@ -932,11 +935,11 @@ function render() {
     `;
     hintEl.innerHTML = `<div class="cat-hint" style="color:${cat.color}">${cat.hint}</div>`;
     btnsEl.innerHTML = `
-      <button class="btn-shake" onclick="onRespin()" ${S.shakeLeft<1?'disabled':''}>
-        ${S.shakeLeft>0 ? '↺ shake the machine' : 'already shook it once today'}
+      <button class="btn-shake" onclick="onRespin()">
+        ↺ shake the machine
       </button>
     `;
-    if (S.shakeLeft > 0) startShakeHint();
+    startShakeHint();
   }
 
   else if (S.phase === 'revealed') {
@@ -954,7 +957,15 @@ function render() {
       </div>
     `;
     const left = ITEMS.filter(i => !S.openedIds.includes(i.id)).length;
-    statusEl.innerHTML = statusHTML(left);
+    if (S.pullsToday < dailyLimit() && left > 0) {
+      btnsEl.innerHTML = `
+        <button class="btn-shake" onclick="onNext()">
+          ↺ next capsule
+        </button>
+      `;
+    } else {
+      statusEl.innerHTML = statusHTML(left);
+    }
   }
 
   else if (S.phase === 'locked') {
@@ -1017,7 +1028,7 @@ function onCapsuleClick() {
     });
     setTimeout(() => {
       const catColor = CATS[S.capsule.category].color;
-      S.openedIds.push(S.capsule.itemId); S.phase = 'revealed'; save(); render();
+      S.openedIds.push(S.capsule.itemId); S.pullsToday++; S.phase = 'revealed'; save(); render();
       setTimeout(() => {
         const target = document.querySelector('.item-overlay') || document.getElementById('capsule-area');
         const capsuleArea = document.getElementById('capsule-area');
@@ -1029,8 +1040,13 @@ function onCapsuleClick() {
       }, 180);
     }, 290);
   } else {
-    S.openedIds.push(S.capsule.itemId); S.phase = 'revealed'; save(); render();
+    S.openedIds.push(S.capsule.itemId); S.pullsToday++; S.phase = 'revealed'; save(); render();
   }
+}
+
+// Return to the machine for another capsule (used while daily pulls remain).
+function onNext() {
+  S.phase = 'ready'; S.capsule = null; save(); render();
 }
 
 function onMarkOpened() {
@@ -1080,9 +1096,8 @@ function transitionToLocked() {
 }
 
 function onRespin() {
-  if (S.shakeLeft < 1 || S.phase !== 'dispensed') return;
+  if (S.phase !== 'dispensed') return;
   if (shakeHintTimer) { clearTimeout(shakeHintTimer); shakeHintTimer = null; }
-  S.shakeLeft--;
   const popup = document.getElementById('capsule-area');
   if (popup) { popup.style.transition='opacity 0.22s,transform 0.22s'; popup.style.opacity='0'; popup.style.transform='translateY(-18px)'; }
   setTimeout(() => {
@@ -1110,8 +1125,6 @@ function shakeMachine(cb) {
   if (g) { g.classList.remove('pulsing'); void g.offsetWidth; g.classList.add('pulsing'); }
   setTimeout(() => { body.classList.remove('shaking'); if(cb) cb(); }, 640);
 }
-
-function resetAll() { localStorage.removeItem('japan-haul'); S = loadState(); render(); }
 
 render();
 </script>
