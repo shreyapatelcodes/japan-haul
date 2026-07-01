@@ -767,7 +767,6 @@ function dailyLimit() { return S.firstDate === todayStr() ? 10 : 1; }
 function poolFor(c) { return ITEMS.filter(i => i.category === c && !S.openedIds.includes(i.id)); }
 function activeCats() { return Object.keys(CATS).filter(c => poolFor(c).length > 0); }
 function draw(exclude = null) {
-  if (S.openedIds.length === 0 && exclude === null) return { itemId: 29, category: 'kitchen' };
   let cats = activeCats();
   if (!cats.length) return null;
   if (exclude && cats.length > 1) cats = cats.filter(c => c !== exclude);
